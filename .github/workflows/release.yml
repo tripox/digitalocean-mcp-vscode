@@ -32,6 +32,10 @@ jobs:
     - name: Build extension
       run: npm run build
 
+    - name: Get VSIX filename
+      id: vsix
+      run: echo "filename=$(ls *.vsix)" >> $GITHUB_OUTPUT
+
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
@@ -49,6 +53,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./digitalocean-mcp-*.vsix
+        asset_path: ./${{ steps.vsix.outputs.filename }}
         asset_name: digitalocean-mcp-extension.vsix
         asset_content_type: application/zip
