@@ -4,13 +4,34 @@ import * as vscode from 'vscode';
 suite('DigitalOcean MCP Extension Test Suite', () => {
 	vscode.window.showInformationMessage('Start all DigitalOcean MCP extension tests.');
 
-	test('Extension should be present', () => {
-		const extension = vscode.extensions.getExtension('tripox.tripox-digitalocean-mcp');
-		assert.ok(extension);
+	test('Extension should be present', async () => {
+		const extension = vscode.extensions.getExtension('tripox.digitalocean-mcp-tools');
+		assert.ok(extension, 'Extension should be found');
+		
+		// Ensure the extension is activated
+		if (!extension.isActive) {
+			await extension.activate();
+		}
+		assert.ok(extension.isActive, 'Extension should be activated');
 	});
 
 	test('Commands should be registered', async () => {
+		// First ensure the extension is activated
+		const extension = vscode.extensions.getExtension('tripox.digitalocean-mcp-tools');
+		assert.ok(extension, 'Extension should be found');
+		
+		if (!extension.isActive) {
+			await extension.activate();
+		}
+		
+		// Wait a bit for commands to be registered after activation
+		await new Promise(resolve => setTimeout(resolve, 200));
+		
 		const commands = await vscode.commands.getCommands(true);
+		
+		// Filter to only our commands for easier debugging
+		const ourCommands = commands.filter(cmd => cmd.startsWith('tripox.digitaloceanMCP.'));
+		console.log('Found our commands:', ourCommands);
 		
 		assert.ok(commands.includes('tripox.digitaloceanMCP.setApiToken'), 'Set API token command should be registered');
 		assert.ok(commands.includes('tripox.digitaloceanMCP.clearApiToken'), 'Clear API token command should be registered');
