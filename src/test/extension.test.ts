@@ -5,22 +5,22 @@ suite('DigitalOcean MCP Extension Test Suite', () => {
 	vscode.window.showInformationMessage('Start all DigitalOcean MCP extension tests.');
 
 	test('Extension should be present', () => {
-		const extension = vscode.extensions.getExtension('tripox.digitalocean-mcp');
+		const extension = vscode.extensions.getExtension('tripox.tripox-digitalocean-mcp');
 		assert.ok(extension);
 	});
 
 	test('Commands should be registered', async () => {
 		const commands = await vscode.commands.getCommands(true);
 		
-		assert.ok(commands.includes('digitalocean-mcp.setApiToken'), 'Set API token command should be registered');
-		assert.ok(commands.includes('digitalocean-mcp.clearApiToken'), 'Clear API token command should be registered');
-		assert.ok(commands.includes('digitalocean-mcp.connectServer'), 'Connect server command should be registered');
-		assert.ok(commands.includes('digitalocean-mcp.disconnectServer'), 'Disconnect server command should be registered');
-		assert.ok(commands.includes('digitalocean-mcp.refreshServers'), 'Refresh servers command should be registered');
+		assert.ok(commands.includes('tripox.digitaloceanMCP.setApiToken'), 'Set API token command should be registered');
+		assert.ok(commands.includes('tripox.digitaloceanMCP.clearApiToken'), 'Clear API token command should be registered');
+		assert.ok(commands.includes('tripox.digitaloceanMCP.connectServer'), 'Connect server command should be registered');
+		assert.ok(commands.includes('tripox.digitaloceanMCP.disconnectServer'), 'Disconnect server command should be registered');
+		assert.ok(commands.includes('tripox.digitaloceanMCP.refreshServers'), 'Refresh servers command should be registered');
 	});
 
 	test('Configuration should be available', () => {
-		const config = vscode.workspace.getConfiguration('digitalocean-mcp');
+		const config = vscode.workspace.getConfiguration('tripox.digitaloceanMCP');
 		assert.ok(config, 'Configuration should be available');
 		
 		// Test default values (API token no longer in configuration)

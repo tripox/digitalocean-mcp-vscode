@@ -10,13 +10,13 @@ class DigitalOceanMcpProvider implements vscode.McpServerDefinitionProvider {
     constructor(private context: vscode.ExtensionContext) {}
 
     async provideMcpServerDefinitions(token: vscode.CancellationToken): Promise<vscode.McpStdioServerDefinition[]> {
-        const apiToken = await this.context.secrets.get('digitalocean-mcp.apiToken');
+        const apiToken = await this.context.secrets.get('tripox.digitaloceanMCP.apiToken');
         
         if (!apiToken) {
             return [];
         }
 
-        const config = vscode.workspace.getConfiguration('digitalocean-mcp');
+        const config = vscode.workspace.getConfiguration('tripox.digitaloceanMCP');
         const command = config.get<string>('serverCommand', 'npx');
         const args = config.get<string[]>('serverArgs', ['@digitalocean/mcp']);
         const env = {
@@ -38,7 +38,7 @@ class DigitalOceanMcpProvider implements vscode.McpServerDefinitionProvider {
         token: vscode.CancellationToken
     ): Promise<vscode.McpStdioServerDefinition | undefined> {
         // Validate API token before starting the server
-        const apiToken = await this.context.secrets.get('digitalocean-mcp.apiToken');
+        const apiToken = await this.context.secrets.get('tripox.digitaloceanMCP.apiToken');
         
         if (!apiToken) {
             vscode.window.showErrorMessage('DigitalOcean API token is required. Please configure it using the "Set API Token" command.');
@@ -69,14 +69,14 @@ class DigitalOceanMcpProvider implements vscode.McpServerDefinitionProvider {
         });
 
         if (token) {
-            await this.context.secrets.store('digitalocean-mcp.apiToken', token);
+            await this.context.secrets.store('tripox.digitaloceanMCP.apiToken', token);
             vscode.window.showInformationMessage('DigitalOcean API token has been securely stored.');
             this.refresh();
         }
     }
 
     async clearApiToken(): Promise<void> {
-        await this.context.secrets.delete('digitalocean-mcp.apiToken');
+        await this.context.secrets.delete('tripox.digitaloceanMCP.apiToken');
         vscode.window.showInformationMessage('DigitalOcean API token has been removed.');
         this.refresh();
     }
@@ -90,29 +90,22 @@ export async function activate(context: vscode.ExtensionContext) {
     // Create and register the MCP server definition provider
     const mcpProvider = new DigitalOceanMcpProvider(context);
     const mcpDisposable = vscode.lm.registerMcpServerDefinitionProvider(
-        'digitalocean-mcp.servers',
+        'tripox.digitaloceanMCP.servers',
         mcpProvider
     );
 
     // Register commands
-    const setApiTokenCommand = vscode.commands.registerCommand('digitalocean-mcp.setApiToken', async () => {
+    const setApiTokenCommand = vscode.commands.registerCommand('tripox.digitaloceanMCP.setApiToken', async () => {
         await mcpProvider.setApiToken();
     });
 
-    const clearApiTokenCommand = vscode.commands.registerCommand('digitalocean-mcp.clearApiToken', async () => {
-        const response = await vscode.window.showWarningMessage(
-            'Are you sure you want to remove your DigitalOcean API token?',
-            'Remove',
-            'Cancel'
-        );
-        
-        if (response === 'Remove') {
-            await mcpProvider.clearApiToken();
-        }
+    const clearApiTokenCommand = vscode.commands.registerCommand('tripox.digitaloceanMCP.clearApiToken', async () => {
+        await mcpProvider.clearApiToken();
+        vscode.window.showInformationMessage('DigitalOcean API token cleared successfully.');
     });
 
-    const connectCommand = vscode.commands.registerCommand('digitalocean-mcp.connectServer', async () => {
-        const apiToken = await context.secrets.get('digitalocean-mcp.apiToken');
+    const connectCommand = vscode.commands.registerCommand('tripox.digitaloceanMCP.connectServer', async () => {
+        const apiToken = await context.secrets.get('tripox.digitaloceanMCP.apiToken');
         
         if (!apiToken) {
             const response = await vscode.window.showWarningMessage(
@@ -131,13 +124,13 @@ export async function activate(context: vscode.ExtensionContext) {
         vscode.window.showInformationMessage('DigitalOcean MCP server connection initiated.');
     });
 
-    const disconnectCommand = vscode.commands.registerCommand('digitalocean-mcp.disconnectServer', () => {
-        vscode.window.showInformationMessage('DigitalOcean MCP server disconnected.');
+    const disconnectCommand = vscode.commands.registerCommand('tripox.digitaloceanMCP.disconnectServer', () => {
+        vscode.window.showInformationMessage('MCP server disconnection initiated.');
     });
 
-    const refreshCommand = vscode.commands.registerCommand('digitalocean-mcp.refreshServers', () => {
+    const refreshCommand = vscode.commands.registerCommand('tripox.digitaloceanMCP.refreshServers', () => {
         mcpProvider.refresh();
-        vscode.window.showInformationMessage('DigitalOcean MCP servers refreshed.');
+        vscode.window.showInformationMessage('MCP servers refreshed.');
     });
 
     // Add all disposables to context subscriptions
@@ -151,17 +144,17 @@ export async function activate(context: vscode.ExtensionContext) {
     );
 
     // Auto-connect if token exists and auto-connect is enabled
-    const config = vscode.workspace.getConfiguration('digitalocean-mcp');
+    const config = vscode.workspace.getConfiguration('tripox.digitaloceanMCP');
     if (config.get<boolean>('autoConnect', true)) {
-        const apiToken = await context.secrets.get('digitalocean-mcp.apiToken');
+        const apiToken = await context.secrets.get('tripox.digitaloceanMCP.apiToken');
         if (apiToken) {
-            vscode.commands.executeCommand('digitalocean-mcp.connectServer');
+            vscode.commands.executeCommand('tripox.digitaloceanMCP.connectServer');
         }
     }
 
     // Listen for configuration changes
     const configChangeDisposable = vscode.workspace.onDidChangeConfiguration(event => {
-        if (event.affectsConfiguration('digitalocean-mcp')) {
+        if (event.affectsConfiguration('tripox.digitaloceanMCP')) {
             mcpProvider.refresh();
         }
     });

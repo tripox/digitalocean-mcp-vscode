@@ -1,8 +1,8 @@
 {
-  "name": "digitalocean-mcp",
-  "displayName": "DigitalOcean MCP",
-  "description": "VS Code extension for DigitalOcean Model Context Protocol integration",
-  "version": "0.0.1",
+  "name": "tripox-digitalocean-mcp",
+  "displayName": "MCP Tools for DigitalOcean (Unofficial)",
+  "description": "Unofficial VS Code extension for DigitalOcean Model Context Protocol integration",
+  "version": "0.0.2",
   "publisher": "tripox",
   "license": "MIT",
   "repository": {
@@ -24,8 +24,17 @@
     "mcp",
     "model-context-protocol",
     "ai",
-    "assistant"
+    "assistant",
+    "cloud",
+    "api",
+    "copilot",
+    "unofficial",
+    "community"
   ],
+  "galleryBanner": {
+    "color": "#333333",
+    "theme": "light"
+  },
   "activationEvents": [
     "onStartupFinished"
   ],
@@ -33,53 +42,53 @@
   "contributes": {
     "commands": [
       {
-        "command": "digitalocean-mcp.setApiToken",
+        "command": "tripox.digitaloceanMCP.setApiToken",
         "title": "Set DigitalOcean API Token",
-        "category": "DigitalOcean MCP"
+        "category": "DigitalOcean MCP (Unofficial)"
       },
       {
-        "command": "digitalocean-mcp.clearApiToken",
-        "title": "Clear DigitalOcean API Token",
-        "category": "DigitalOcean MCP"
+        "command": "tripox.digitaloceanMCP.clearApiToken",
+        "title": "Clear API Token for DigitalOcean MCP",
+        "category": "DigitalOcean MCP (Unofficial)"
       },
       {
-        "command": "digitalocean-mcp.connectServer",
+        "command": "tripox.digitaloceanMCP.connectServer",
         "title": "Connect to DigitalOcean MCP Server",
-        "category": "DigitalOcean MCP"
+        "category": "DigitalOcean MCP (Unofficial)"
       },
       {
-        "command": "digitalocean-mcp.disconnectServer",
-        "title": "Disconnect from MCP Server",
-        "category": "DigitalOcean MCP"
+        "command": "tripox.digitaloceanMCP.disconnectServer",
+        "title": "Disconnect from DigitalOcean MCP Server",
+        "category": "DigitalOcean MCP (Unofficial)"
       },
       {
-        "command": "digitalocean-mcp.refreshServers",
+        "command": "tripox.digitaloceanMCP.refreshServers",
         "title": "Refresh MCP Servers",
-        "category": "DigitalOcean MCP"
+        "category": "DigitalOcean MCP (Unofficial)"
       }
     ],
     "mcpServerDefinitionProviders": [
       {
-        "id": "digitalocean-mcp.servers",
-        "label": "DigitalOcean MCP Servers"
+        "id": "tripox.digitaloceanMCP.servers",
+        "label": "DigitalOcean MCP Servers (Unofficial)"
       }
     ],
     "configuration": {
-      "title": "DigitalOcean MCP",
+      "title": "DigitalOcean MCP (Unofficial)",
       "properties": {
-        "digitalocean-mcp.serverCommand": {
+        "tripox.digitaloceanMCP.serverCommand": {
           "type": "string",
           "default": "npx",
           "description": "Command to run the DigitalOcean MCP server"
         },
-        "digitalocean-mcp.serverArgs": {
+        "tripox.digitaloceanMCP.serverArgs": {
           "type": "array",
           "default": [
             "@digitalocean/mcp"
           ],
           "description": "Arguments for the DigitalOcean MCP server command"
         },
-        "digitalocean-mcp.autoConnect": {
+        "tripox.digitaloceanMCP.autoConnect": {
           "type": "boolean",
           "default": true,
           "description": "Automatically connect to MCP server on startup"

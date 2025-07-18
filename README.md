@@ -1,11 +1,13 @@
-# DigitalOcean MCP VS Code Extension
+# DigitalOcean MCP VS Code Extension (Unofficial)
 
 [![CI](https://github.com/tripox/digitalocean-mcp-vscode/actions/workflows/ci.yml/badge.svg)](https://github.com/tripox/digitalocean-mcp-vscode/actions/workflows/ci.yml)
 [![Release](https://github.com/tripox/digitalocean-mcp-vscode/actions/workflows/release.yml/badge.svg)](https://github.com/tripox/digitalocean-mcp-vscode/actions/workflows/release.yml)
 [![VS Code Version](https://img.shields.io/badge/VS%20Code-1.102.0+-blue.svg)](https://code.visualstudio.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A VS Code extension that integrates with the DigitalOcean Model Context Protocol (MCP) server, enabling seamless interaction with DigitalOcean services directly from your code editor.
+An **unofficial** VS Code extension that integrates with the DigitalOcean Model Context Protocol (MCP) server, enabling seamless interaction with DigitalOcean services directly from your code editor.
+
+> **⚠️ Disclaimer**: This is an unofficial community extension and is not affiliated with, endorsed by, or sponsored by DigitalOcean, LLC. DigitalOcean is a trademark of DigitalOcean, LLC.
 
 ## Features
 
