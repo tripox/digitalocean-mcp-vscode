@@ -93,9 +93,9 @@ No known issues at this time. Please report any bugs or feature requests via [Gi
 
 See [CHANGELOG.md](./CHANGELOG.md) or the [GitHub Releases](https://github.com/tripox/digitalocean-mcp-vscode/releases) page for version history.
 
-**Version 0.0.2** - Complete namespace refactoring and marketplace preparation:
+**Version 1.0.0** - Complete namespace refactoring and marketplace preparation:
 - **BREAKING CHANGES**: Complete namespace refactoring for marketplace safety
-- Changed package name to `tripox-digitalocean-mcp`
+- Changed package name to `digitalocean-mcp-tools`
 - Updated all command IDs to use `tripox.digitaloceanMCP.*` namespace
 - Added "(Unofficial)" branding throughout
 - Improved gallery banner with professional gray theme

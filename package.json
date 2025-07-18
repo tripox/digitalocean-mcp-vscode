@@ -2,7 +2,7 @@
   "name": "digitalocean-mcp-tools",
   "displayName": "MCP Tools for DigitalOcean (Unofficial)",
   "description": "Unofficial VS Code extension for DigitalOcean Model Context Protocol integration",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "publisher": "tripox",
   "license": "MIT",
   "repository": {

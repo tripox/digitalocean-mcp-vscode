@@ -5,7 +5,7 @@ All notable changes to the "DigitalOcean MCP VS Code Extension (Unofficial)" are
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.0.2] - 2025-07-18
+## [1.0.0] - 2025-07-18
 
 ### Changed
 - **BREAKING**: Updated extension name from "DigitalOcean MCP" to "DigitalOcean MCP (Unofficial)" to avoid confusion with potential official DigitalOcean extensions
@@ -50,5 +50,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `digitalocean-mcp.serverArgs`: Arguments for the MCP server command (default: `["@digitalocean/mcp"]`)
 - `digitalocean-mcp.autoConnect`: Automatically connect to MCP server on startup (default: `true`)
 
-[0.0.2]: https://github.com/tripox/digitalocean-mcp-vscode/releases/tag/v0.0.2
+[1.0.0]: https://github.com/tripox/digitalocean-mcp-vscode/releases/tag/v1.0.0
 [0.0.1]: https://github.com/tripox/digitalocean-mcp-vscode/releases/tag/v0.0.1
