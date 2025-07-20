@@ -1,8 +1,8 @@
 {
   "name": "digitalocean-mcp-tools",
   "displayName": "MCP Tools for DigitalOcean (Unofficial)",
-  "description": "Unofficial VS Code extension for DigitalOcean Model Context Protocol integration",
-  "version": "1.0.0",
+  "description": "Unofficial VS Code extension integrating with DigitalOcean via MCP: includes API key setup, MCP server registration, and rich in‑editor commands to manage apps, deployments, logs, rollbacks, alerts, regions, and metrics.",
+  "version": "1.0.1",
   "publisher": "tripox",
   "license": "MIT",
   "repository": {
@@ -44,37 +44,42 @@
       {
         "command": "tripox.digitaloceanMCP.setApiToken",
         "title": "Set DigitalOcean API Token",
-        "category": "DigitalOcean MCP (Unofficial)"
+        "category": "MCP Tools for DigitalOcean (Unofficial)"
       },
       {
         "command": "tripox.digitaloceanMCP.clearApiToken",
         "title": "Clear API Token for DigitalOcean MCP",
-        "category": "DigitalOcean MCP (Unofficial)"
+        "category": "MCP Tools for DigitalOcean (Unofficial)"
       },
       {
         "command": "tripox.digitaloceanMCP.connectServer",
         "title": "Connect to DigitalOcean MCP Server",
-        "category": "DigitalOcean MCP (Unofficial)"
+        "category": "MCP Tools for DigitalOcean (Unofficial)"
       },
       {
         "command": "tripox.digitaloceanMCP.disconnectServer",
         "title": "Disconnect from DigitalOcean MCP Server",
-        "category": "DigitalOcean MCP (Unofficial)"
+        "category": "MCP Tools for DigitalOcean (Unofficial)"
       },
       {
         "command": "tripox.digitaloceanMCP.refreshServers",
         "title": "Refresh MCP Servers",
-        "category": "DigitalOcean MCP (Unofficial)"
+        "category": "MCP Tools for DigitalOcean (Unofficial)"
+      },
+      {
+        "command": "tripox.digitaloceanMCP.showBuildInfo",
+        "title": "Show Build Information",
+        "category": "MCP Tools for DigitalOcean (Unofficial)"
       }
     ],
     "mcpServerDefinitionProviders": [
       {
         "id": "tripox.digitaloceanMCP.servers",
-        "label": "DigitalOcean MCP Servers (Unofficial)"
+        "label": "MCP Tools for DigitalOcean (Unofficial)"
       }
     ],
     "configuration": {
-      "title": "DigitalOcean MCP (Unofficial)",
+      "title": "MCP Tools for DigitalOcean (Unofficial)",
       "properties": {
         "tripox.digitaloceanMCP.serverCommand": {
           "type": "string",

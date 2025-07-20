@@ -8,7 +8,7 @@ class Logger {
 
     private formatMessage(level: string, message: string): string {
         const timestamp = new Date().toISOString();
-        return `[${timestamp}] [MCP Tools] [${this.moduleName}] [${level}] ${message}`;
+        return `[${timestamp}] [MCP Tools for DigitalOcean (Unofficial)] [${this.moduleName}] [${level}] ${message}`;
     }
 
     info(message: string): void {
@@ -56,7 +56,7 @@ class DigitalOceanMcpProvider implements vscode.McpServerDefinitionProvider {
         };
 
         const server = new vscode.McpStdioServerDefinition(
-            'DigitalOcean MCP Server',
+            'MCP Tools for DigitalOcean (Unofficial)',
             command,
             args,
             env
@@ -127,12 +127,11 @@ class DigitalOceanMcpProvider implements vscode.McpServerDefinitionProvider {
 // Your extension is activated the very first time the command is executed
 export async function activate(context: vscode.ExtensionContext) {
     // Create output channel for logging
-    // Create output channel for logging
-    const outputChannel = vscode.window.createOutputChannel('DigitalOcean MCP');
+    const outputChannel = vscode.window.createOutputChannel('MCP Tools for DigitalOcean (Unofficial)');
     const logger = new Logger(outputChannel, 'Activation');
     
     // Developer log for debugging
-    console.log('[MCP Tools] Extension activation started');
+    logger.debug('Extension activation started');
     
     // User-facing log in output channel
     logger.info('Extension activated successfully');
@@ -229,5 +228,5 @@ export async function activate(context: vscode.ExtensionContext) {
 
 // This method is called when your extension is deactivated
 export function deactivate() {
-    console.log('[MCP Tools] Extension deactivated');
+    console.log('[MCP Tools for DigitalOcean (Unofficial)] Extension deactivated');
 }
