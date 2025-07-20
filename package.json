@@ -65,11 +65,6 @@
         "command": "tripox.digitaloceanMCP.refreshServers",
         "title": "Refresh MCP Servers",
         "category": "MCP Tools for DigitalOcean (Unofficial)"
-      },
-      {
-        "command": "tripox.digitaloceanMCP.showBuildInfo",
-        "title": "Show Build Information",
-        "category": "MCP Tools for DigitalOcean (Unofficial)"
       }
     ],
     "mcpServerDefinitionProviders": [
