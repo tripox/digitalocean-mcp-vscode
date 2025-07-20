@@ -44,9 +44,7 @@ suite('DigitalOcean MCP Extension Test Suite', () => {
 		const config = vscode.workspace.getConfiguration('tripox.digitaloceanMCP');
 		assert.ok(config, 'Configuration should be available');
 		
-		// Test default values (API token no longer in configuration)
-		assert.strictEqual(config.get('serverCommand'), 'npx');
-		assert.deepStrictEqual(config.get('serverArgs'), ['@digitalocean/mcp']);
+		// Test default value
 		assert.strictEqual(config.get('autoConnect'), true);
 	});
 

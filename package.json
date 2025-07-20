@@ -81,18 +81,6 @@
     "configuration": {
       "title": "MCP Tools for DigitalOcean (Unofficial)",
       "properties": {
-        "tripox.digitaloceanMCP.serverCommand": {
-          "type": "string",
-          "default": "npx",
-          "description": "Command to run the DigitalOcean MCP server"
-        },
-        "tripox.digitaloceanMCP.serverArgs": {
-          "type": "array",
-          "default": [
-            "@digitalocean/mcp"
-          ],
-          "description": "Arguments for the DigitalOcean MCP server command"
-        },
         "tripox.digitaloceanMCP.autoConnect": {
           "type": "boolean",
           "default": true,

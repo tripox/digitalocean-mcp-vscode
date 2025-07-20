@@ -54,11 +54,11 @@ This extension contributes the following commands:
 
 ## Extension Settings
 
-This extension contributes the following settings:
+This extension contributes the following setting:
 
-* `tripox.digitaloceanMCP.serverCommand`: Command to run the DigitalOcean MCP server (default: `npx`)
-* `tripox.digitaloceanMCP.serverArgs`: Arguments for the MCP server command (default: `["@digitalocean/mcp"]`)
 * `tripox.digitaloceanMCP.autoConnect`: Automatically connect to MCP server on startup (default: `true`)
+
+**Security Note**: For security reasons, the MCP server command and arguments are hardcoded to use only the official `@digitalocean/mcp` package via `npx`. This prevents arbitrary code execution vulnerabilities.
 
 ## Setup
 
@@ -78,12 +78,18 @@ This extension contributes the following settings:
 ## Security
 
 This extension was developed with security best practices:
+
+### Data Protection
 - API tokens are stored using VS Code's encrypted SecretStorage
 - No secrets are stored in settings or written to disk
 - Token input is masked in the UI
 - No telemetry or data collection is included
 
-Please review the source code if in doubt, and feel free to report any security concerns via GitHub issues.
+### Code Execution Security
+- **Hardcoded command execution**: Only `npx @digitalocean/mcp` can be executed
+- **No user-configurable commands**: Prevents arbitrary code execution vulnerabilities
+- **Limited environment exposure**: Only essential environment variables are passed to subprocesses
+- **Input validation**: Strict validation of API token format and content
 
 ## Known Issues
 

@@ -2,6 +2,11 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 
+// SECURITY NOTE: This extension uses hardcoded command execution to prevent
+// arbitrary code execution vulnerabilities. The MCP server command and arguments
+// are NOT user-configurable to maintain security. Only the official 
+// @digitalocean/mcp package is executed via npx.
+
 // Lightweight logging utility for structured logging
 class Logger {
     constructor(private outputChannel: vscode.OutputChannel, private moduleName: string) {}
@@ -36,6 +41,8 @@ class DigitalOceanMcpProvider implements vscode.McpServerDefinitionProvider {
     private _onDidChangeMcpServerDefinitions = new vscode.EventEmitter<void>();
     readonly onDidChangeMcpServerDefinitions = this._onDidChangeMcpServerDefinitions.event;
     private logger: Logger;
+    private lastTokenSetTime = 0;
+    private readonly TOKEN_SET_COOLDOWN = 5000; // 5 seconds between token set attempts
 
     constructor(private context: vscode.ExtensionContext, outputChannel: vscode.OutputChannel) {
         this.logger = new Logger(outputChannel, 'Provider');
@@ -48,12 +55,25 @@ class DigitalOceanMcpProvider implements vscode.McpServerDefinitionProvider {
             return [];
         }
 
-        const config = vscode.workspace.getConfiguration('tripox.digitaloceanMCP');
-        const command = config.get<string>('serverCommand', 'npx');
-        const args = config.get<string[]>('serverArgs', ['@digitalocean/mcp']);
-        const env = {
-            DIGITALOCEAN_API_TOKEN: apiToken
+        // Security: Use hardcoded, trusted command and args to prevent code injection
+        // Only the official DigitalOcean MCP package is allowed
+        const command = 'npx';
+        const args = ['@digitalocean/mcp'];
+        
+        // Security: Only pass essential environment variables to minimize attack surface
+        const env: Record<string, string | number | null> = {
+            DIGITALOCEAN_API_TOKEN: apiToken,
+            // Prevent npm from sending analytics or update notifications
+            npm_config_fund: 'false',
+            npm_config_audit: 'false'
         };
+
+        // Inherit PATH for npx to work, but ensure it's defined
+        if (process.env.PATH) {
+            env.PATH = process.env.PATH;
+        }
+
+        this.logger.info('Creating MCP server definition with secure, hardcoded command');
 
         const server = new vscode.McpStdioServerDefinition(
             'MCP Tools for DigitalOcean (Unofficial)',
@@ -88,29 +108,54 @@ class DigitalOceanMcpProvider implements vscode.McpServerDefinitionProvider {
     }
 
     async setApiToken(): Promise<void> {
-        const token = await vscode.window.showInputBox({
-            prompt: 'Enter your DigitalOcean API token',
-            password: true,
-            placeHolder: 'dop_v1_...',
-            validateInput: (value) => {
-                if (!value || value.trim().length === 0) {
-                    return 'API token cannot be empty';
-                }
-                if (!value.startsWith('dop_v1_')) {
-                    return 'DigitalOcean API token should start with "dop_v1_"';
-                }
-                return null;
-            }
-        });
+        // Rate limiting to prevent rapid token setting attempts
+        const now = Date.now();
+        if (now - this.lastTokenSetTime < this.TOKEN_SET_COOLDOWN) {
+            const waitTime = Math.ceil((this.TOKEN_SET_COOLDOWN - (now - this.lastTokenSetTime)) / 1000);
+            vscode.window.showWarningMessage(`Please wait ${waitTime} seconds before setting token again.`);
+            return;
+        }
 
-        if (token) {
-            await this.context.secrets.store('tripox.digitaloceanMCP.apiToken', token);
-            const message = 'DigitalOcean API token has been securely stored.';
-            this.logger.info('API token stored successfully in secure storage');
-            vscode.window.showInformationMessage(message);
-            this.refresh();
-        } else {
-            this.logger.info('API token setup cancelled by user');
+        try {
+            const token = await vscode.window.showInputBox({
+                prompt: 'Enter your DigitalOcean API token',
+                password: true,
+                placeHolder: 'dop_v1_...',
+                validateInput: (value) => {
+                    if (!value || value.trim().length === 0) {
+                        return 'API token cannot be empty';
+                    }
+                    // More strict validation for DigitalOcean API tokens
+                    if (!value.startsWith('dop_v1_')) {
+                        return 'DigitalOcean API token must start with "dop_v1_"';
+                    }
+                    // Check minimum length (DigitalOcean tokens are typically 64+ chars)
+                    if (value.length < 20) {
+                        return 'API token appears to be too short';
+                    }
+                    // Check for suspicious characters that shouldn't be in a token
+                    if (!/^[a-zA-Z0-9_]+$/.test(value)) {
+                        return 'API token contains invalid characters';
+                    }
+                    return null;
+                }
+            });
+
+            if (token) {
+                this.lastTokenSetTime = Date.now();
+                // Additional server-side validation could be added here
+                // by making a test API call to verify the token
+                await this.context.secrets.store('tripox.digitaloceanMCP.apiToken', token);
+                const message = 'DigitalOcean API token has been securely stored.';
+                this.logger.info('API token stored successfully in secure storage');
+                vscode.window.showInformationMessage(message);
+                this.refresh();
+            } else {
+                this.logger.info('API token setup cancelled by user');
+            }
+        } catch (error) {
+            this.logger.error(`Failed to set API token: ${error}`);
+            vscode.window.showErrorMessage('Failed to store API token. Please try again.');
         }
     }
 
