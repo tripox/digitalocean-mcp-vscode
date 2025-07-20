@@ -5,7 +5,7 @@
 [![VS Code Version](https://img.shields.io/badge/VS%20Code-1.102.0+-blue.svg)](https://code.visualstudio.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-An **unofficial** VS Code extension that integrates with the DigitalOcean Model Context Protocol (MCP) server, enabling seamless interaction with DigitalOcean services directly from your code editor.
+An **unofficial** VS Code extension that registers a DigitalOcean MCP server, allowing tools like Copilot Chat to interact with your infrastructure — including apps, deployments, logs, and metrics — directly from your editor.
 
 > **⚠️ Disclaimer**: This is an unofficial community extension and is not affiliated with, endorsed by, or sponsored by DigitalOcean, LLC. DigitalOcean is a trademark of DigitalOcean, LLC.
 
@@ -25,13 +25,13 @@ An **unofficial** VS Code extension that integrates with the DigitalOcean Model 
 ## Installation
 
 1. Install the extension from the VS Code marketplace
-2. Set your DigitalOcean API token using the "DigitalOcean MCP (Unofficial): Set DigitalOcean API Token" command
+2. Set your DigitalOcean API token using the "MCP Tools for DigitalOcean (Unofficial): Set DigitalOcean API Token" command
 3. The extension will automatically connect to the MCP server
 
 ## Migration from Previous Versions
 
-**Breaking Changes in v0.0.2:**
-- Extension package name changed from `digitalocean-mcp` to `tripox-digitalocean-mcp`
+**Breaking Changes in v1.0.0:**
+- Extension package name changed from `digitalocean-mcp` to `digitalocean-mcp-tools`
 - All command IDs now use `tripox.digitaloceanMCP.*` namespace
 - Configuration keys updated to `tripox.digitaloceanMCP.*` format
 - API tokens stored with new secret storage keys
@@ -46,11 +46,11 @@ An **unofficial** VS Code extension that integrates with the DigitalOcean Model 
 
 This extension contributes the following commands:
 
-* `DigitalOcean MCP (Unofficial): Set DigitalOcean API Token`: Securely store your DigitalOcean API token
-* `DigitalOcean MCP (Unofficial): Clear API Token for DigitalOcean MCP`: Remove stored API token from secure storage
-* `DigitalOcean MCP (Unofficial): Connect to DigitalOcean MCP Server`: Manually connect to the MCP server
-* `DigitalOcean MCP (Unofficial): Disconnect from DigitalOcean MCP Server`: Disconnect from the MCP server
-* `DigitalOcean MCP (Unofficial): Refresh MCP Servers`: Refresh the list of available MCP servers
+* `MCP Tools for DigitalOcean (Unofficial): Set DigitalOcean API Token`: Securely store your DigitalOcean API token
+* `MCP Tools for DigitalOcean (Unofficial): Clear API Token for DigitalOcean MCP`: Remove stored API token from secure storage
+* `MCP Tools for DigitalOcean (Unofficial): Connect to DigitalOcean MCP Server`: Manually connect to the MCP server
+* `MCP Tools for DigitalOcean (Unofficial): Disconnect from DigitalOcean MCP Server`: Disconnect from the MCP server
+* `MCP Tools for DigitalOcean (Unofficial): Refresh MCP Servers`: Refresh the list of available MCP servers
 
 ## Extension Settings
 
@@ -70,7 +70,7 @@ This extension contributes the following settings:
 2. **Configure the Extension**:
    - Open VS Code
    - Open the Command Palette (`Ctrl+Shift+P` or `Cmd+Shift+P`)
-   - Run the command "DigitalOcean MCP (Unofficial): Set DigitalOcean API Token"
+   - Run the command "MCP Tools for DigitalOcean (Unofficial): Set DigitalOcean API Token"
    - Paste your API token when prompted
 
    The extension will automatically download and run the DigitalOcean MCP server using `npx @digitalocean/mcp` when needed.
@@ -92,21 +92,6 @@ No known issues at this time. Please report any bugs or feature requests via [Gi
 ## Releases
 
 See [CHANGELOG.md](./CHANGELOG.md) or the [GitHub Releases](https://github.com/tripox/digitalocean-mcp-vscode/releases) page for version history.
-
-**Version 1.0.0** - Complete namespace refactoring and marketplace preparation:
-- **BREAKING CHANGES**: Complete namespace refactoring for marketplace safety
-- Changed package name to `digitalocean-mcp-tools`
-- Updated all command IDs to use `tripox.digitaloceanMCP.*` namespace
-- Added "(Unofficial)" branding throughout
-- Improved gallery banner with professional gray theme
-- Enhanced command titles for better clarity
-- Fixed syntax errors and improved code quality
-
-**Version 0.0.1** - Initial release:
-- Secure API token management with VS Code SecretStorage
-- MCP server integration for DigitalOcean services
-- Command palette integration
-- Auto-connection capabilities
 
 ## Development
 

@@ -8,11 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2025-07-18
 
 ### Changed
-- **BREAKING**: Updated extension name from "DigitalOcean MCP" to "DigitalOcean MCP (Unofficial)" to avoid confusion with potential official DigitalOcean extensions
-- **BREAKING**: Changed package name from `digitalocean-mcp` to `tripox-digitalocean-mcp` for better namespace safety
+- **BREAKING**: Changed package name from `digitalocean-mcp` to `digitalocean-mcp-tools`
 - **BREAKING**: Changed all command IDs from `digitalocean-mcp.*` to `tripox.digitaloceanMCP.*` to prevent conflicts with potential official extensions
 - **BREAKING**: Updated configuration namespace from `digitalocean-mcp` to `tripox.digitaloceanMCP`
 - **BREAKING**: Changed secret storage keys from `digitalocean-mcp.*` to `tripox.digitaloceanMCP.*`
+- Updated extension name from "DigitalOcean MCP" to "MCP Tools for DigitalOcean (Unofficial)" to avoid confusion with potential official DigitalOcean extensions
 - Updated all command categories to include "(Unofficial)" designation
 - Updated configuration title and MCP server labels to include "(Unofficial)" designation
 - Added "unofficial" and "community" keywords to improve marketplace discoverability
